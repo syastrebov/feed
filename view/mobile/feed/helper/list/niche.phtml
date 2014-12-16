@@ -1,0 +1,32 @@
+<?php
+/** @var string $feedType */
+/** @var array $feedList */
+?>
+<?=$this->partial('layout/header/default')?>
+
+<div
+    ng-controller="FeedController"
+    ng-init="init(
+        {type: <?=$feedType?>, niche: <?=$id?>},
+        [],
+        [],
+        <?=htmlspecialchars(json_encode($feedList))?>
+    )">
+
+    <?=$this->partial('feed/helper/list-empty')?>
+
+    <div class="feed">
+        <?=$this->partial('feed/helper/add-post-button')?>
+        <div class="post" ng-repeat="post in getPosts()">
+            <?=$this->partial('feed/helper/post-feed')?>
+        </div>
+        <div class="show-more-block" ng-cloak ng-show="showMoreBtn()">
+            <a class="show-more-button ng-hide" href="javascript:void(0);" ng-click="getList()" ng-show="!isLocked()">
+                <span class="text">Показать еще</span>
+            </a>
+            <div class="show-more-loading" ng-show="isLocked()"></div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

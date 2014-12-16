@@ -1,0 +1,87 @@
+<?php
+    use Feed\Entity\Feed;
+
+?>
+<div ng-controller="PostController" ng-init="init()">
+    <div class="top-menu-fixed">
+        <div class="top-menu">
+            <a class="top-menu__back" href="javascript:void(0);"></a>
+
+            <div class="top-menu__title">
+                Написать
+            </div>
+
+            <div class="top-menu__right">
+                <div class="top-menu__send" ng-class="{'disabled' : invalidPost}" ng-click="addPost()"></div>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="main-holder"></div>
+    <div class="top-select">
+        <div class="item"
+             ng-click="changeTab(<?=Feed::FEED_ENTITY_TYPE_SIMPLE?>)"
+             ng-class="{'active' : typeId == <?=Feed::FEED_ENTITY_TYPE_SIMPLE?>}">Публикация</div>
+        <div class="item"
+             ng-click="changeTab(<?=Feed::FEED_ENTITY_TYPE_SIMPLE_GOAL?>)"
+             ng-class="{'active' : typeId == <?=Feed::FEED_ENTITY_TYPE_SIMPLE_GOAL?>}">Отписка по целям</div>
+    </div>
+
+    <div class="top-search" ng-show="typeId == <?=Feed::FEED_ENTITY_TYPE_SIMPLE_GOAL?>">
+        <span class="icon"></span>
+        <form>
+            <div angucomplete-alt
+                 placeholder="Начните вводить название цели..." pause="400"
+                 selected-object="setPost"
+                 search-fields="label"
+                 remote-url="/api/entry?q="
+                 remote-url-data-field="data"
+                 title-field="title"
+                 input-class="search-value"></div>
+        </form>
+        <div class="cancel">Отмена</div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="submit-form">
+        <form class="form" ng-submit="addPost()">
+            <textarea class="textarea"
+                      ng-model="text"
+                      placeholder="Поделитесь своими мыслями...">{{text}}</textarea>
+
+<?php /*<div class="attachment">
+    <div class="item">
+        <img class="img" src="http://longlash.biz/sites/longlash.biz/files/styles/480x400/public/krasivaya.jpg" alt=""/>
+        <div class="remove"></div>
+    </div>
+    <div class="item">
+        <img class="img" src="http://longlash.biz/sites/longlash.biz/files/styles/480x400/public/krasivaya.jpg" alt=""/>
+        <div class="remove"></div>
+    </div>
+    <div class="item">
+        <img class="img" src="http://longlash.biz/sites/longlash.biz/files/styles/480x400/public/krasivaya.jpg" alt=""/>
+        <div class="remove"></div>
+    </div>
+
+    <div class="clear"></div>
+</div>
+*/?>
+            <div class="attachment-add photo"></div>
+
+            <div class="submit-form__tags">
+                <div class="icon"></div>
+
+                <span class="item">ЧСМ</span>
+                <span class="item">Мотивация</span>
+                <span class="item">Религия</span>
+                <span class="item">ЧСМ</span>
+                <span class="item">Мотивация</span>
+                <span class="item">Религия</span>
+                <span class="item">ЧСМ</span>
+                <span class="item">Религия</span>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="post__img" ng-show="post.files.length > 0">
+    <div class="post__img-image">
+        <img ng-repeat="file in post.files"
+             alt=""
+             ng-src="{{file.path}}"
+             data-image="{{file.path}}"
+             data-rel="post{{post.id}}"
+             class="pic js-modal"
+             ng-if="$index == 0" />
+
+        <img ng-repeat="file in post.files"
+             alt=""
+             ng-src="{{file.path}}"
+             data-image="{{file.path}}"
+             data-rel="post{{post.id}}"
+             class="ng-hide"
+             class="pic"
+             ng-if="$index > 0" />
+    </div>
+    <!--            <div class="post__img-icon video"></div>-->
+
+    <div class="post__bottom">
+        <?=$this->partial('social/like/post')?>
+        <div class="clear"></div>
+    </div>
+</div>

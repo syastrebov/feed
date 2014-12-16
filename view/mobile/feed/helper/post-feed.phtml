@@ -1,0 +1,48 @@
+<div class="post"
+     ng-cloak
+     ng-controller="FeedPostController"
+     ng-init="init(post)">
+
+    <div ng-show="post.hidden" class="spam-block">
+        <span class="spam-block__text">Публикация скрыта</span>
+        <a href="javascript:void(0);" ng-click="toggleHidePost()" class="spam-block__remove">
+            <span class="spam-block__remove-icon"></span>
+            <span class="spam-block__remove-text">Отменить</span>
+        </a>
+    </div>
+    <div ng-show="!post.hidden">
+        <div ng-show="post.isDeleted" class="deleted"></div>
+        <div class="post__top">
+            <?=$this->partial('feed/helper/partials/post-avatar')?>
+            <div class="info">
+                <?=$this->partial('feed/helper/partials/post-member-name')?>
+                <?=$this->partial('feed/helper/partials/post-date')?>
+                <?=$this->partial('feed/helper/partials/post-options')?>
+                <?=$this->partial('feed/helper/partials/post-tags')?>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+
+        <div class="post__content">
+            <p>
+                <span ng-click="openPostModal()"
+                      ng-bind-html="post.text | beautify | truncate: (isMore ? undefined : getTextMoreMaxChars()) : '' | trustHtml">
+                </span>
+                <span class="show-more"
+                      ng-hide="isMore"
+                      ng-click="isMore=!isMore"><span class="icon"></span></span>
+            </p>
+        </div>
+
+        <?=$this->partial('feed/helper/partials/post-image')?>
+
+        <div class="post__bottom" ng-show="!post.files.length">
+            <?=$this->partial('social/like/post')?>
+            <div class="clear"></div>
+        </div>
+
+        <?=$this->partial('comment/template/feed')?>
+        <?=$this->partial('feed/helper/partials/post-moderation-menu')?>
+    </div>
+</div>

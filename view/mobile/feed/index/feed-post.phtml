@@ -1,0 +1,77 @@
+<?php
+    use Feed\Entity\Feed;
+?>
+<div ng-controller="FeedPostWriteController"
+     ng-init="init(<?=$this->post ? htmlspecialchars(json_encode($this->post)) : 0?>)">
+
+    <div class="top-menu-fixed">
+        <div class="top-menu">
+            <a class="top-menu__back" href="javascript:window.history.back()"></a>
+
+            <div class="top-menu__title">
+                {{post.id ? 'Редактировать' : 'Написать'}}
+            </div>
+
+            <div class="top-menu__right">
+                <div class="top-menu__send"
+                     ng-class="{'disabled' : !isValid()}"
+                     ng-click="savePost()"></div>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="main-holder"></div>
+
+    <div class="top-select">
+        <div class="item"
+             ng-click="changeTab(<?=Feed::FEED_ENTITY_TYPE_SIMPLE?>)"
+             ng-class="{'active' : post.typeId == <?=Feed::FEED_ENTITY_TYPE_SIMPLE?>}">Публикация</div>
+        <div class="item"
+             ng-click="changeTab(<?=Feed::FEED_ENTITY_TYPE_SIMPLE_GOAL?>)"
+             ng-class="{'active' : post.typeId == <?=Feed::FEED_ENTITY_TYPE_SIMPLE_GOAL?>}">Отписка по целям</div>
+    </div>
+
+    <div class="top-search" ng-show="post.typeId == <?=Feed::FEED_ENTITY_TYPE_SIMPLE_GOAL?>">
+        <span class="icon"></span>
+        <form>
+            <div angucomplete-alt
+                    placeholder="Начните вводить название цели..." pause="400"
+                    selected-object="setEntry"
+                    search-fields="label"
+                    remote-url="/api/entry?q="
+                    title-field="title"
+                    text-searching="Ищем..."
+                    text-no-results="Ничего не найдено"
+                    input-value="<?=$this->title?>"
+                    input-class="search-value"></div>
+        </form>
+
+        <div class="clear"></div>
+    </div>
+    <div class="submit-form">
+        <form class="form" ng-submit="savePost()">
+            <input type="hidden" ng-model="post.id" value="<?=$this->post ? $this->post['id'] : 0?>"/>
+            <textarea class="textarea"
+                      ng-model="post.text"
+                      placeholder="Поделитесь своими мыслями...">{{text}}</textarea>
+
+            <div class="attachment">
+                <div class="item" ng-repeat="file in post.files">
+                    <img class="img" ng-src="{{file.path}}" alt=""/>
+                    <div class="remove" ng-click="deleteFile(file)"></div>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+            <div class="attachment-add photo"></div>
+
+            <div class="submit-form__tags" ng-click="selectTags()">
+                <div class="icon"></div>
+                <div class="placeholder" ng-hide="hasSelectedTags()">Укажите на какую тему пост...</div>
+                <span class="item" ng-repeat="tag in post.tags">{{tag.name}}</span>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<? /** @var array $post */ ?>
+
+<div ng-switch-when="feed-post">
+    <?=$this->partial('layout/header/default')?>
+    <div class="post"
+         ng-controller="FeedPostSingleController"
+         ng-init="init('modal')">
+
+        <?=$this->partial('feed/helper/post')?>
+    </div>
+</div>

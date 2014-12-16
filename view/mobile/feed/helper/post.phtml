@@ -1,0 +1,31 @@
+<div class="post"
+     ng-cloak
+     ng-controller="FeedPostController"
+     ng-init="init(post)">
+
+    <div class="post__top">
+        <?=$this->partial('feed/helper/partials/post-avatar')?>
+        <div class="info">
+            <?=$this->partial('feed/helper/partials/post-member-name')?>
+            <?=$this->partial('feed/helper/partials/post-date')?>
+            <?=$this->partial('feed/helper/partials/post-options')?>
+            <?=$this->partial('feed/helper/partials/post-tags')?>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="post__content">
+        <p><span ng-click="closeModal()" ng-bind-html="post.text | beautify | trustHtml"></span></p>
+    </div>
+
+    <?=$this->partial('feed/helper/partials/post-image')?>
+
+    <div class="post__bottom" ng-show="!post.files.length">
+        <?=$this->partial('social/like/post')?>
+        <div class="clear"></div>
+    </div>
+
+    <?=$this->partial('comment/template/post')?>
+    <?=$this->partial('feed/helper/partials/post-moderation-menu')?>
+</div>

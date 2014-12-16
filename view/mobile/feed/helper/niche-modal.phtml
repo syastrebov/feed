@@ -1,0 +1,37 @@
+<div ng-controller="NicheModalController" ng-init="init()" ng-switch-when="niche">
+    <div class="top-search">
+        <span class="icon"></span>
+        <form ng-submit="searchList()" on-submit="return false;">
+            <input type="text"
+                   name="q"
+                   ng-model="query"
+                   ng-change="bounceSearch()"
+                   focus-input="modalOpened"
+                   class="search-value"
+                   value="<?=$this->query?>"
+                   placeholder="Поиск"
+                   autocomplete="off">
+        </form>
+        <div class="cancel ng-hide" ng-hide="isSearching() || !query.length" ng-click="clearQuery()">Отмена</div>
+        <div class="search-preloader ng-hide" ng-show="isSearching()"></div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="user-list" ng-repeat="tag in tags">
+        <div class="item" ng-controller="NicheModalTagController" ng-init="init(tag)">
+            <a href="javascript:void(0);" ng-click="selectTag()" class="avatar">
+                <img alt="" src="http://epilawg.com/wp-content/uploads/2013/12/Professional-Photo-square.jpg" class="img">
+            </a>
+            <div class="info">
+                <div class="text">
+                    <a href="javascript:void(0);" ng-click="selectTag()" class="name">{{tag.name}}</a>
+                </div>
+
+                <div class="add" ng-class="{'active' : tag.selected}" ng-click="toggleSubscribe()"></div>
+                <div class="clear"></div>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

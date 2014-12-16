@@ -1,0 +1,71 @@
+<?php
+    use Application\Entity\Tag;
+
+    /** @var string $feedType */
+    /** @var array $feedList */
+?>
+<?=$this->partial('layout/header/default')?>
+<div
+    ng-controller="FeedController"
+    ng-init="init(
+        {type: <?=$feedType?>},
+        <?=htmlspecialchars(json_encode($this->feedTagFilter(Tag::TYPE_FEED_PRODUCT)))?>,
+        <?=htmlspecialchars(json_encode($this->feedTagFilter(Tag::TYPE_FEED_NICHE)))?>,
+        <?=htmlspecialchars(json_encode($feedList))?>
+    )">
+
+    <div class="rivers-top">
+        <div class="rivers-top__filters">
+            <div class="item">
+                <mobile-select
+                     label="Курсы"
+                     items="getProducts()"
+                     item="getProduct()"
+                     callback="selectProduct"></mobile-select>
+            </div>
+            <div class="item" ng-click="openNicheModal()">
+                <mobile-select
+                    label="Интересы"
+                    items="getNiches()"
+                    item="getNiche()"
+                    callback="selectNiche"></mobile-select>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+
+        <div class="rivers-top__sub">
+            <? if ($this->security()->identity()->getId()) : ?>
+            <div class="text" ng-show="ownConfig()">
+                Ваши реки сформированы <br />
+                на основе ваших данных
+            </div>
+            <? endif; ?>
+            <div class="icons">
+                <div class="item profit" ng-click="orderByProfit()" ng-class="{active: getOrderBy() === 'useful'}"></div>
+                <div class="item geo" ng-click="openModal('geo')"></div>
+                <div class="item money"></div>
+
+                <div class="clear"></div>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <?=$this->partial('feed/helper/list-empty')?>
+
+    <div class="feed">
+        <?=$this->partial('feed/helper/add-post-button')?>
+        <div class="post" ng-repeat="post in getPosts()">
+            <?=$this->partial('feed/helper/post-feed')?>
+        </div>
+        <div class="show-more-block" ng-cloak ng-show="showMoreBtn()">
+            <a class="show-more-button ng-hide" href="javascript:void(0);" ng-click="getList()" ng-show="!isLocked()">
+                <span class="text">Показать еще</span>
+            </a>
+            <div class="show-more-loading" ng-show="isLocked()"></div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

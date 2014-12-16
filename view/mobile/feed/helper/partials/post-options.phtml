@@ -1,0 +1,7 @@
+<? if ($this->security()->identity()->getId() > 0) : ?>
+    <div class="add"
+         ng-show="!isOwnPost()"
+         ng-class="{'active' : post.member.subscribed}"
+         ng-click="toggleSubscribe()"></div>
+    <div class="options" ng-click="openModeration()"></div>
+<? endif; ?>

@@ -1,0 +1,8 @@
+<div class="date">
+    Написал <time-ago from-time="{{post.createdTimestamp}}"></time-ago>
+    <span ng-show="post.entryId" class="task">по задаче</span>
+    <span ng-show="post.entryId" class="task-title">
+        <span class="icon"></span>
+        <span ng-bind="post.title"></span>
+    </span>
+</div>

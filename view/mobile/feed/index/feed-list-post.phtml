@@ -1,0 +1,9 @@
+<? /** @var array $post */ ?>
+<?=$this->partial('layout/header/default')?>
+
+<div class="post"
+     ng-controller="FeedPostSingleController"
+     ng-init="init('controller', <?=htmlspecialchars(json_encode($post))?>)">
+
+    <?=$this->partial('feed/helper/post')?>
+</div>

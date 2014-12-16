@@ -1,0 +1,15 @@
+<div class="bottom-select ng-hide" ng-show="isModeration && isOverlayShown()">
+    <div class="list">
+        <div class="item ng-hide"
+             ng-click="editPost('<?=$this->url('feed.edit', ['id' => '_ID_'])?>')"
+             ng-show="isOwnPost()">Редактировать</div>
+        <div class="item" ng-show="!isOwnPost()" ng-click="markSpam()">Это спам</div>
+        <div class="item" ng-click="toggleHidePost()">
+            {{post.hidden ? 'Показать публикацию' : 'Скрыть публикацию'}}
+        </div>
+    </div>
+
+    <div class="list">
+        <div class="item cancel" ng-click="closeModeration()">Отмена</div>
+    </div>
+</div>
